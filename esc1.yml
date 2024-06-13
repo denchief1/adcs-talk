@@ -1,0 +1,26 @@
+title: ADCS Privilege Escalation - ESC1/ESC2
+status: experimental
+description: Detects certificate creation with an alternative subject name
+references:
+    - https://www.specterops.io/assets/resources/Certified_Pre-Owned.pdf
+author: JHarrand
+date: 2024/06/10
+tags:
+    - attack.privilege_escalation
+    - attack.credential_access
+logsource:
+    product: windows
+    service: security
+detection:
+    security:
+        Channel: Security 
+    selection:
+        EventID: 4887
+        Attributes|contains: SAN
+    condition: security and selection
+falsepositives:
+    - Administrator activity
+    - Proxy SSL certificate with subject modification
+    - Smart card enrollement
+level: high
+ruletype: Sigma
